@@ -1,4 +1,4 @@
 itk
 ===
 
-In this repository is including some 
+In this repository include C++ source code of some classes depeveloped for medical image processing.
