@@ -20,20 +20,19 @@ namespace itk
 		//Default variables values
 
 		if(ImageDimension == 2){
-			m_LambdaXY = 6000;
-			m_LambdaZ  = 15000;
-			m_LambdaW  = 20000;
-			m_Iterations = 5;
-			m_GaussSeidelIterations = 200;
+			m_LambdaXY = 3000;
+			m_LambdaZ  = 0;
+			m_LambdaW  = 0;
 		}
 		else
 		{
 			m_LambdaXY = 6000;
 			m_LambdaZ  = 15000;
-			m_LambdaW  = 20000;
-			m_Iterations = 5;
-			m_GaussSeidelIterations = 200;			
+			m_LambdaW  = 20000;			
 		}
+
+		m_Iterations = 5;
+		m_GaussSeidelIterations = 200;
 		m_Threshold = 1.0;
 
 		//Default Interpolator
