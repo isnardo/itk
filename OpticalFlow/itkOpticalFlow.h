@@ -77,23 +77,26 @@ namespace itk
 			//Macro to Set other type of interpolator
 			itkSetObjectMacro( Interpolator,InterpolatorType );
 			//Iterations number for the optical flow 
-			itkSetMacro( m_Iterations,int );
-			itkGetMacro( m_Iterations,int );
+			itkSetMacro( Iterations,int );
+			itkGetMacro( Iterations,int );
 			//Iterations number for Gauss-Seidel method to solve the linear sistem of equations
-			itkSetMacro( m_GaussSeidelIterations,int );
-			itkGetMacro( m_GaussSeidelIterations,int );
+			itkSetMacro( GaussSeidelIterations,int );
+			itkGetMacro( GaussSeidelIterations,int );
 			//Stop Threshold according to intensities differences
-			itkSetMacro( m_Threshold,float );
-			itkGetMacro( m_Threshold,float );
+			itkSetMacro( Threshold,float );
+			itkGetMacro( Threshold,float );
 			//Lambda XY (Weigth in directions X and Y for the regularization term in the energy function)
-			itkSetMacro( m_LambdaXY,float );
-			itkGetMacro( m_LambdaXY,float );
+			itkSetMacro( LambdaXY,float );
+			itkGetMacro( LambdaXY,float );
 			//Lambda Z (Weigth in directions Z for the regularization term in the energy function)
-			itkSetMacro( m_LambdaZ,float );
-			itkGetMacro( m_LambdaZ,float );
+			itkSetMacro( LambdaZ,float );
+			itkGetMacro( LambdaZ,float );
 			//Lambda W (Weigth for all displacements)
-			itkSetMacro( m_LambdaW,float );
-			itkGetMacro( m_LambdaW,float );
+			itkSetMacro( LambdaW,float );
+			itkGetMacro( LambdaW,float );
+			//Show algorithm iterations
+			itkSetMacro( ShowIterations,bool );
+			itkBooleanMacro( ShowIterations );
 
 
 			//Types image elements
@@ -122,7 +125,7 @@ namespace itk
 											DisplacementField = DisplacementField_t;
 											DisplacementFieldFlag = true;
 										};
-			virtual typename DisplacementImageType::Pointer GetDisplacementField()
+			virtual typename VectorImageType::Pointer GetDisplacementField()
 												{
 													return DisplacementField;
 												};
@@ -180,6 +183,7 @@ namespace itk
 			int 																				m_Iterations;
 			int 																				m_GaussSeidelIterations;
 			float																				m_Threshold;
+			bool																				m_ShowIterations;
 
 			bool																				DisplacementFieldFlag;
 			float																				IntensitiesRange;
@@ -200,7 +204,7 @@ namespace itk
 			typename InternalImageType::Pointer					aux_DerivativeZ;
 			typename InternalImageType::Pointer					SubImage;
 			typename VectorImageType::Pointer						DisplacementField;
-			typename VectorImageType::Pointer						aux_DeformationField;
+			typename VectorImageType::Pointer						aux_DisplacementField;
 
 			void 	ComputeGradient();
 			void 	SolveGaussSeidel3D();
@@ -216,7 +220,7 @@ namespace itk
 } //namespace ITK
 
 #ifndef ITK_MANUAL_INSTANTIATION
-#include "itkOpticalFlow.txx"
+#include "itkOpticalFlow.hxx"
 #endif
 
 #endif
