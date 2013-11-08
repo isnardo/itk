@@ -738,38 +738,24 @@ namespace itk
 		for(int i = 0; i < m_Iterations; i++)
 		{
 
-			error_1 = this->ComputePercentageImageDifferences();		
+			// Previous Vector Field d_1
+			duplicator = DuplicatorType::New();
+			duplicator->SetInputImage( DisplacementField );
+			duplicator->Update();
+			DisplacementField_1 = duplicator->GetOutput();
+
+			//Compute the percentage error in the intensities before to optical flow
+			if( i == 0)
+				error_1 = this->ComputePercentageImageDifferences();		
 
 			//Compute The proposed Optical Flow
 			this->ComputeOpticalFlow();
-/*
-///******************
-			if( i == 0)
-			{
-				VectorPixelType 					Value;
-				itk::ImageRegionIteratorWithIndex< VectorImageType > IteVec( DisplacementField,DisplacementField->GetRequestedRegion() );
-				typename InternalImageType::SpacingType	Space;
-				Space = FixedImage->GetSpacing();
 
-				IteVec.GoToBegin();
-				while( !IteVec.IsAtEnd() )
-				{
-					Value = IteVec.Get();
-					for(int j = 0; j < ImageDimension; j++)
-						Value[j] *= Space[j];
-					IteVec.Set( Value );
-					++IteVec;
-				}
-			}
-///*******************/
-			
-			//Compute the percentage error in the intensities
+			//Compute the percentage error in the intensities after to optical flow
 			error = this->ComputePercentageImageDifferences();
 
 			dif = error_1 - error;
 
-			
-			
 			//Check threshold
 			if( error < m_Threshold )
 			{
@@ -778,8 +764,12 @@ namespace itk
 				break;
 			}
 
+			// If the previous error was better
 			if ( dif < 0)
 			{
+				// If the d_1 was better than d, take d_1
+				DisplacementField = DisplacementField_1;
+				//Show Itearions only if was activated
 				if( m_ShowIterations )
 				{
 					if (i == 0)
@@ -789,6 +779,8 @@ namespace itk
 				}
 				break;
 			}
+			
+			error_1 = error;
 
 		}
 

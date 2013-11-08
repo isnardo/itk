@@ -205,6 +205,7 @@ namespace itk
                         typename InternalImageType::Pointer                                        SubImage;
                         typename VectorImageType::Pointer                                                DisplacementField;
                         typename VectorImageType::Pointer                                                aux_DisplacementField;
+                        typename VectorImageType::Pointer                                                DisplacementField_1;
 
                         void         ComputeGradient();
                         void         SolveGaussSeidel3D();
