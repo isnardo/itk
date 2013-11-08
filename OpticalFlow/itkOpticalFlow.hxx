@@ -546,6 +546,7 @@ namespace itk
 				++IteVec;
 			}//End While
 		}// End Gauss-Seidel
+
 	}
 
 
@@ -708,7 +709,7 @@ namespace itk
 	{
 
 		typename DuplicatorType::Pointer 	duplicator = DuplicatorType::New();
-		float 														error;
+		float 														error, error_1, dif;
 
 		//Allocate Displacement Field Memory
 		if( !DisplacementFieldFlag )
@@ -736,18 +737,59 @@ namespace itk
 		//Iterative Optical FLow
 		for(int i = 0; i < m_Iterations; i++)
 		{
+
+			error_1 = this->ComputePercentageImageDifferences();		
+
 			//Compute The proposed Optical Flow
 			this->ComputeOpticalFlow();
+/*
+///******************
+			if( i == 0)
+			{
+				VectorPixelType 					Value;
+				itk::ImageRegionIteratorWithIndex< VectorImageType > IteVec( DisplacementField,DisplacementField->GetRequestedRegion() );
+				typename InternalImageType::SpacingType	Space;
+				Space = FixedImage->GetSpacing();
+
+				IteVec.GoToBegin();
+				while( !IteVec.IsAtEnd() )
+				{
+					Value = IteVec.Get();
+					for(int j = 0; j < ImageDimension; j++)
+						Value[j] *= Space[j];
+					IteVec.Set( Value );
+					++IteVec;
+				}
+			}
+///*******************/
 			
 			//Compute the percentage error in the intensities
 			error = this->ComputePercentageImageDifferences();
 
-			if( m_ShowIterations )
-				std::cout<<" Iteration = "<< i+1 <<"    %Diff. = "<< error <<std::endl;
+			dif = error_1 - error;
+
+			
 			
 			//Check threshold
 			if( error < m_Threshold )
+			{
+				if( m_ShowIterations )
+					std::cout<<" Iteration = "<< i+1 <<" %Diff. = "<<error_1<<";";
 				break;
+			}
+
+			if ( dif < 0)
+			{
+				if( m_ShowIterations )
+				{
+					if (i == 0)
+						std::cout<<" Iteration = "<< i+1 <<" %Diff. = "<<error_1<<";";
+					else
+						std::cout<<" Iteration = "<< i <<" %Diff. = "<<error_1<<";";
+				}
+				break;
+			}
+
 		}
 
 	}	
