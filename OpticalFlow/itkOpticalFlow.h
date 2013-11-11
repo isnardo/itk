@@ -138,13 +138,28 @@ namespace itk
 
                         virtual void GenerateData();
 
+                        float                                               m_LambdaXY;
+                        float                                               m_LambdaZ;
+                        float                                               m_LambdaW;
+                        float                                               m_Threshold;
+
+                        typename InternalImageType::Pointer                 MovingImage;
+                        typename InternalImageType::Pointer                 FixedImage;
+                        typename InputImageType::ConstPointer               InputFixedImage;
+                        typename InputImageType::ConstPointer               InputMovingImage;
+												typename VectorImageType::Pointer                   DisplacementField;
+                        typename InterpolatorType::Pointer                  m_Interpolator;
+
+                        void AllocateDisplacementField();
+
                         //Transform Internal Image Type using a Given a Displacement Field
-                        virtual typename InternalImageType::Pointer ApplyDisplacementField(typename InternalImageType::Pointer I,
-                                                                                                                                                                                         typename VectorImageType::Pointer V)
+                        virtual typename InternalImageType::Pointer ApplyDisplacementField( 
+																														typename InternalImageType::Pointer I,
+																														typename VectorImageType::Pointer V )
                         {
 
                                 typename ImageMinMaxFilterType::Pointer                MinMax = ImageMinMaxFilterType::New();
-                                typename WarpFilterType::Pointer                                         WarpFilter = WarpFilterType::New();
+                                typename WarpFilterType::Pointer                       WarpFilter = WarpFilterType::New();
 
                                 //Find the Minimum Value
                                 MinMax->SetImage( I );
@@ -176,42 +191,29 @@ namespace itk
 
                 private:
                         //Private Variables
-                        float                                                                                                                                                                m_LambdaXY;
-                        float                                                                                                                                                                m_LambdaZ;
-                        float                                                                                                                                                                m_LambdaW;
+                        int                                                 m_Iterations;
+                   			int                                                 m_GaussSeidelIterations;
+                        bool                                                m_ShowIterations;
+                        bool                                         				DisplacementFieldFlag;
+                        float                                               IntensitiesRange;
 
-                        int                                                                                                                                                                 m_Iterations;
-                        int                                                                                                                                                                 m_GaussSeidelIterations;
-                        float                                                                                                                                                                m_Threshold;
-                        bool                                                                                                                                                                m_ShowIterations;
+                        SizeType                                            FixedImageSize;
+                        SizeType                                            MovingImageSize;
 
-                        bool                                                                                                                                                                DisplacementFieldFlag;
-                        float                                                                                                                                                                IntensitiesRange;
+                        typename InternalImageType::Pointer                 DerivativeX;
+                        typename InternalImageType::Pointer                 DerivativeY;
+                        typename InternalImageType::Pointer                 DerivativeZ;
+                        typename InternalImageType::Pointer                 aux_DerivativeX;
+                        typename InternalImageType::Pointer                 aux_DerivativeY;
+                        typename InternalImageType::Pointer                 aux_DerivativeZ;
+                        typename InternalImageType::Pointer                 SubImage;
+                        typename VectorImageType::Pointer                   aux_DisplacementField;
+                        typename VectorImageType::Pointer                   DisplacementField_1;
 
-                        SizeType                                                                                                                                                FixedImageSize;
-                        SizeType                                                                                                                                                MovingImageSize;
-
-                        typename InternalImageType::Pointer                                        MovingImage;
-                        typename InternalImageType::Pointer                                        FixedImage;
-                        typename InputImageType::ConstPointer                                InputFixedImage;
-                        typename InputImageType::ConstPointer                                InputMovingImage;
-                        typename InterpolatorType::Pointer                                        m_Interpolator;
-                        typename InternalImageType::Pointer                                        DerivativeX;
-                        typename InternalImageType::Pointer                                        DerivativeY;
-                        typename InternalImageType::Pointer                                        DerivativeZ;
-                        typename InternalImageType::Pointer                                        aux_DerivativeX;
-                        typename InternalImageType::Pointer                                        aux_DerivativeY;
-                        typename InternalImageType::Pointer                                        aux_DerivativeZ;
-                        typename InternalImageType::Pointer                                        SubImage;
-                        typename VectorImageType::Pointer                                                DisplacementField;
-                        typename VectorImageType::Pointer                                                aux_DisplacementField;
-                        typename VectorImageType::Pointer                                                DisplacementField_1;
-
-                        void         ComputeGradient();
-                        void         SolveGaussSeidel3D();
-                        void         SolveGaussSeidel2D();
-                        void         ComputeOpticalFlow();
-                        void         AllocateDisplacementField();
+                        void ComputeGradient();
+                        void SolveGaussSeidel3D();
+                        void SolveGaussSeidel2D();
+                        void ComputeOpticalFlow();
                         float ComputeIntensitiesRange();
                         float ComputePercentageImageDifferences();
 
