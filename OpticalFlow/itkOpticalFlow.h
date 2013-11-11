@@ -142,6 +142,8 @@ namespace itk
                         float                                               m_LambdaZ;
                         float                                               m_LambdaW;
                         float                                               m_Threshold;
+                        SizeType                                            FixedImageSize;
+                        SizeType                                            MovingImageSize;
 
                         typename InternalImageType::Pointer                 MovingImage;
                         typename InternalImageType::Pointer                 FixedImage;
@@ -196,9 +198,6 @@ namespace itk
                         bool                                                m_ShowIterations;
                         bool                                         				DisplacementFieldFlag;
                         float                                               IntensitiesRange;
-
-                        SizeType                                            FixedImageSize;
-                        SizeType                                            MovingImageSize;
 
                         typename InternalImageType::Pointer                 DerivativeX;
                         typename InternalImageType::Pointer                 DerivativeY;
