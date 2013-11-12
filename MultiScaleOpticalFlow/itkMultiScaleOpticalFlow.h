@@ -27,6 +27,9 @@ namespace itk
 
 												//Macro to Set other type of interpolator
                         itkSetObjectMacro( Interpolator,InterpolatorType );
+												//MAcro to number of scales
+                        itkSetMacro( NumberOfScales,int );
+                        itkGetMacro( NumberOfScales,int );
                               
 
                 protected:
@@ -38,6 +41,12 @@ namespace itk
 
                 private:
                         //Private Variables
+												int 			m_NumberOfScales;
+												int 			*Iterations;
+												bool			ban_Iterations;
+
+
+
 												typename InterpolatorType::Pointer 				m_Interpolator;
  
 
