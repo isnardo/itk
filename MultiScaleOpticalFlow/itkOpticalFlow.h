@@ -150,7 +150,6 @@ namespace itk
                         typename InputImageType::ConstPointer               InputFixedImage;
                         typename InputImageType::ConstPointer               InputMovingImage;
 												typename VectorImageType::Pointer                   DisplacementField;
-                        typename InterpolatorType::Pointer                  m_Interpolator;
 
                         void AllocateDisplacementField();
 
@@ -208,6 +207,7 @@ namespace itk
                         typename InternalImageType::Pointer                 SubImage;
                         typename VectorImageType::Pointer                   aux_DisplacementField;
                         typename VectorImageType::Pointer                   DisplacementField_1;
+                        typename InterpolatorType::Pointer                  m_Interpolator;
 
                         void ComputeGradient();
                         void SolveGaussSeidel3D();

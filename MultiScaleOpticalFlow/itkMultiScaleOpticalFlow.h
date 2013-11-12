@@ -19,6 +19,16 @@ namespace itk
                         itkNewMacro( Self );
                         itkTypeMacro( OpticalFlow,ImageToImageFilter );
 
+                        //Type to manage an internal image type
+                        typedef itk::Image< float,itkGetStaticConstMacro(ImageDimension)>	   	InternalImageType;
+                        typedef LinearInterpolateImageFunction<InternalImageType,double>			DefaultInterpolatorType;
+                        typedef InterpolateImageFunction<InternalImageType,double>            InterpolatorType;
+
+
+												//Macro to Set other type of interpolator
+                        itkSetObjectMacro( Interpolator,InterpolatorType );
+                              
+
                 protected:
 
                         MultiScaleOpticalFlow();
@@ -28,6 +38,7 @@ namespace itk
 
                 private:
                         //Private Variables
+												typename InterpolatorType::Pointer 				m_Interpolator;
  
 
         };//Class Multi Scale Optical Flow
