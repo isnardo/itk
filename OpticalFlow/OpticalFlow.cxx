@@ -5,16 +5,15 @@
 
 //------------------------------------------------------------------------------
 //
-// ./OpticalFlow FixedImage MovingImage TransformedImage VectorField InputVectorField
+// ./OpticalFlow FixedImage MovingImage TransformedImage DisplacementField InputDisplacement
 //
-// FixedImage                                 -> Fixed image file name (Input)
-// MovingImage                                 -> Moving image file name (Input)
-// TransformedImage         <- Name of file to save transformed image (Output)
-// VectorField                                 <- Name of Vector Field (Output Optional)
-// VectorField                                 -> Name of Input Vector Field (Input Optional)
+// FixedImage                     -> Fixed image file name (Input)
+// MovingImage                    -> Moving image file name (Input)
+// TransformedImage         			<- Name of file to save transformed image (Output)
+// DisplacementField              <- Name of Displacement Field (Output Optional)
+// DisplacementField              -> Name of Input Displacemnt Field (Input Optional)
 //
 //------------------------------------------------------------------------------
-
 
 int main( int argc, char **argv ) {
         //Types definition

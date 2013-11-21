@@ -14,5 +14,5 @@ include(${ITK_USE_FILE})
 
 add_executable(OpticalFlow OpticalFlow.cxx)
 
-target_link_libraries(OpticalFlow  ${ITK_LIBRARIES})
+target_link_libraries(OpticalFlow ${ITK_LIBRARIES})
 
