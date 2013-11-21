@@ -11,3 +11,14 @@
 *.lai
 *.la
 *.a
+
+# Medical image formats
+
+*.nii
+
+# Backups maked by editor
+
+*.txt~
+*.hxx~
+*.h~
+*.cxx~
