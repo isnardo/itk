@@ -746,7 +746,24 @@ namespace itk
 
 			//Compute the percentage error in the intensities before to optical flow
 			if( i == 0)
-				error_1 = this->ComputePercentageImageDifferences();		
+			{
+				typename SubFilterType::Pointer 				SubFilter = SubFilterType::New();
+
+				SubFilter->SetInput1( FixedImage );
+        SubFilter->SetInput2( MovingImage );
+        try
+        {
+	        SubFilter->Update();
+				}
+        catch( itk::ExceptionObject & excep )
+        {
+        	std::cerr << "Exception catched !" << std::endl;
+          std::cerr << excep << std::endl;
+        }
+        SubImage = SubFilter->GetOutput();
+
+				error_1 = this->ComputePercentageImageDifferences();	
+			}
 
 			//Compute The proposed Optical Flow
 			this->ComputeOpticalFlow();
@@ -756,11 +773,14 @@ namespace itk
 
 			dif = error_1 - error;
 
+			if( m_ShowIterations )
+				std::cout<<" Iteration "<<i+1<<"   %Diff. = "<<error<<std::endl;
+
 			//Check threshold
 			if( error < m_Threshold )
 			{
 				if( m_ShowIterations )
-					std::cout<<" Iteration = "<< i+1 <<" %Diff. = "<<error_1<<";";
+					std::cout<<" Finished at Iteration = "<< i+1 <<"   %Diff. = "<<error<<std::endl;
 				break;
 			}
 
@@ -772,14 +792,14 @@ namespace itk
 				//Show Itearions only if was activated
 				if( m_ShowIterations )
 				{
-					if (i == 0)
-						std::cout<<" Iteration = "<< i+1 <<" %Diff. = "<<error_1<<";";
-					else
-						std::cout<<" Iteration = "<< i <<" %Diff. = "<<error_1<<";";
+					std::cout<<" Finished at Iteration = "<< i+1 <<"   %Diff. = "<<error_1<<std::endl;
 				}
 				break;
 			}
 			
+			if( m_ShowIterations & i == m_Iterations-1 )
+					std::cout<<" Finished at Iteration = "<< i+1 <<"   %Diff. = "<<error<<std::endl;
+
 			error_1 = error;
 
 		}
