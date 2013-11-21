@@ -12,6 +12,7 @@
 #include "itkLinearInterpolateImageFunction.h"
 #include "itkMinimumMaximumImageCalculator.h"
 #include "itkWarpImageFilter.h"
+#include "itkImageRegionIterator.h"
 
 namespace itk
 {
@@ -100,11 +101,11 @@ namespace itk
 
 
                         //Types image elements
-                        typedef typename InternalImageType::PixelType                                                PixelType;
-                        typedef typename InternalImageType::IndexType                                                IndexType;
-                        typedef typename InternalImageType::SizeType                                                SizeType;
+                        typedef typename InternalImageType::PixelType                                         PixelType;
+                        typedef typename InternalImageType::IndexType                                         IndexType;
+                        typedef typename InternalImageType::SizeType                                          SizeType;
                         typedef typename InternalImageType::RegionType                                        RegionType;
-                        typedef typename VectorImageType::IndexType                                                        VectorIndexType;
+                        typedef typename VectorImageType::IndexType                                           VectorIndexType;
 
                         
                         //** Public functions definition **//
@@ -126,9 +127,9 @@ namespace itk
                                                                                         DisplacementFieldFlag = true;
                                                                                 };
                         virtual typename VectorImageType::Pointer GetDisplacementField()
-                                                                                                {
-                                                                                                        return DisplacementField;
-                                                                                                };
+                                                                 {
+                                                                 			return DisplacementField;
+                                                                 };
                         virtual typename OutputImageType::Pointer GetTransformedImage();
 
                 protected:
@@ -149,7 +150,6 @@ namespace itk
                         typename InternalImageType::Pointer                 FixedImage;
                         typename InputImageType::ConstPointer               InputFixedImage;
                         typename InputImageType::ConstPointer               InputMovingImage;
-												typename VectorImageType::Pointer                   DisplacementField;
 
                         void AllocateDisplacementField();
 
@@ -198,6 +198,7 @@ namespace itk
                         bool                                         				DisplacementFieldFlag;
                         float                                               IntensitiesRange;
 
+												typename VectorImageType::Pointer                   DisplacementField;
                         typename InternalImageType::Pointer                 DerivativeX;
                         typename InternalImageType::Pointer                 DerivativeY;
                         typename InternalImageType::Pointer                 DerivativeZ;
