@@ -314,6 +314,7 @@ namespace itk
 		IndexType Index;
 		it.GoToBegin();
 
+
 		if( ImageDimension == 3 )//3D
 			//Differences in Intensisties
 			while( !it.IsAtEnd() )
@@ -728,16 +729,17 @@ namespace itk
 		aux_DisplacementField = duplicator->GetOutput();
 		MovingImage->SetSpacing( FixedImage->GetSpacing() );
 
+
 		//Compute the Gradient
 		this->ComputeGradient();
 
 		//Obtain the Intensities Range
 		this->IntensitiesRange = this->ComputeIntensitiesRange();
 
+
 		//Iterative Optical FLow
 		for(int i = 0; i < m_Iterations; i++)
 		{
-
 			// Previous Vector Field d_1
 			duplicator = DuplicatorType::New();
 			duplicator->SetInputImage( DisplacementField );
