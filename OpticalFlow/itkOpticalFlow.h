@@ -121,10 +121,10 @@ namespace itk
                                                                                         MovingImageSize = MovingImage->GetLargestPossibleRegion().GetSize();
                                                                                 };
                         virtual void SetDisplacementField(typename VectorImageType::Pointer DisplacementField_t)
-                                                                                {
-                                                                                        DisplacementField = DisplacementField_t;
-                                                                                        DisplacementFieldFlag = true;
-                                                                                };
+                                         	{
+                                         		DisplacementField = DisplacementField_t;
+                                         		DisplacementFieldFlag = true;
+                                         	};
                         virtual typename VectorImageType::Pointer GetDisplacementField()
                                                                                                 {
                                                                                                         return DisplacementField;

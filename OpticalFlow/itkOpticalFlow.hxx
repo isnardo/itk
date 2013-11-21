@@ -18,7 +18,6 @@ namespace itk
 		this->SetNumberOfRequiredInputs( 0 );
 
 		//Default variables values
-
 		if( ImageDimension == 2 ){
 			m_LambdaXY = 3000;
 			m_LambdaZ  = 0;
