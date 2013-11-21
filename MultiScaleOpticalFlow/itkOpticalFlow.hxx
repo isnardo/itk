@@ -794,10 +794,7 @@ namespace itk
 				//Show Itearions only if was activated
 				if( m_ShowIterations )
 				{
-					if (i == 0)
-						std::cout<<" Finished at Iteration = "<< i+1 <<"   %Diff. = "<<std::endl;
-					else
-						std::cout<<" Iteration = "<< i <<"   %Diff. = "<<std::endl;
+					std::cout<<" Finished at Iteration = "<< i+1 <<"   %Diff. = "<<error_1<<std::endl;
 				}
 				break;
 			}
